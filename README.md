@@ -160,6 +160,40 @@ SPA 需要保证:
 
 项目包含 `vercel.json`，已配置 SPA rewrite 到 `/`。
 
+## 8.3 GitHub Actions 自动部署到云服务器
+
+仓库已提供工作流文件:
+
+- `.github/workflows/deploy.yml`
+
+触发方式:
+
+- `push main` 自动触发
+- 手动触发 `workflow_dispatch`
+
+工作流执行内容:
+
+1. `npm ci`
+2. `npm run build`（会生成 `dist` 与 `.gz/.br` 预压缩资源）
+3. 通过 `SSH + rsync` 同步到服务器的 `TARGET_DIR/dist/`
+4. 同步前会重建服务器端 `dist` 目录（仅删除 `dist` 子目录，不影响同级其它文件）
+5. 可选执行 Nginx 重载命令
+
+需要在 GitHub 仓库 `Settings -> Secrets and variables -> Actions` 中配置:
+
+- `SERVER_HOST`: 云服务器公网 IP 或域名
+- `SERVER_PORT`: SSH 端口（如 `22`）
+- `SERVER_USER`: SSH 用户（建议专用 deploy 用户）
+- `SERVER_SSH_KEY`: 私钥内容（建议 ED25519，需对应服务器公钥）
+- `TARGET_DIR`: 站点目录（如 `/var/www/kingcola-icg`）
+- `NGINX_RELOAD_COMMAND`（可选）: 如 `sudo systemctl reload nginx`
+
+注意:
+
+- 若你的默认分支不是 `main`，请修改 `deploy.yml` 中的分支名。
+- 服务器用户需对 `TARGET_DIR` 有写权限。
+- 若使用 `sudo` 重载 Nginx，请确保该用户具备免密 sudo 权限（至少对 reload 命令）。
+
 ## 9. 用户体验相关说明（已实现）
 
 - 加载页避免长时间阻塞，弱网下提供兜底与重试

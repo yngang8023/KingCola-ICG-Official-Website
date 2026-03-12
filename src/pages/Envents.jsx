@@ -66,7 +66,7 @@ function Envents() {
         <div className="md:mx-8 md:mt-16 mt-8 ">
           <div className="md:flex flex-row md:gap-20">
             <div className="md:w-[590px] animate__animated animate__fadeInLeft animate__delay-2s mx-auto w-[280px]">
-              <img className="md:h-[590px] h-auto" src={eventimage} alt="Kingcola-ICG 招新海报" draggable={false} onDragStart={(e) => e.preventDefault()} />
+              <img className="md:h-[590px] h-auto block mx-auto" src={eventimage} alt="Kingcola-ICG 招新海报" draggable={false} onDragStart={(e) => e.preventDefault()} />
               <div className="flex md:w-[476px] w-[280px] gap-5 align-middle content-center px-2 md:px-4 py-3 bg-gradient-to-l from-neutral-900 to-gray-900 rounded">
                 <div>
                   <div className="text-center py-2 text-cyan-400 text-xl md:text-[25px] font-bold">

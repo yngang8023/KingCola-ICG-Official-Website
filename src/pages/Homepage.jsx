@@ -631,7 +631,7 @@ const Homepage = () => {
                                 🏆 团队深耕数学建模、电子商务、物联网、创新创业、科普作品等方向，累计斩获国家级奖项近 50 项、省级奖项 100 余项、校级奖项百余项；并取得软件著作权 15 项、实用新型专利 2 项、外观设计专利 3 项，发表 SCI 二区论文 4 篇、SCI 四区论文 2 篇。
                             </p>
                             <p className="mt-3">
-                                ✨ 目前团队已入驻计算机学院微科创新创业基地 8 年多，持续推进实验室产品研发与落地。
+                                ✨ 目前团队已入驻计算机学院微科创新创业基地 6 年多，持续推进实验室产品研发与落地。
                             </p>
                         </div>
                     </div>
@@ -912,14 +912,17 @@ const Homepage = () => {
 
                         <div className="absolute top-[48%] md:top-[64%] left-1/2 -translate-x-1/2 w-[90%] md:w-[88%] min-h-[170px] md:h-[26%] z-[8] rounded-[16px] md:rounded-[22px] border-2 border-[#7fdfff8f] bg-[#061323]/88 shadow-[0_0_48px_rgba(127,223,255,0.24)] pointer-events-none">
                             <div className="absolute inset-0 rounded-[14px] md:rounded-[20px] [background-image:radial-gradient(circle,rgba(127,223,255,0.18)_1px,transparent_1.7px)] [background-size:20px_20px] opacity-[0.24]" />
-                            <div className="absolute inset-0 flex flex-col items-start md:items-center justify-center px-5 md:px-10 py-3 md:py-0 text-left md:text-center">
-                                <p className="text-[#d8f5ff] text-[11px] md:text-xl font-semibold tracking-[0.03em] md:tracking-[0.08em] leading-5 md:leading-normal">
-                                    前端 · 后端 · 人工智能 · 嵌入式 全链路协同
+                            <div className="absolute inset-0 flex flex-col items-start md:items-center justify-center gap-1 md:gap-2 px-5 md:px-10 py-3 md:py-0 text-left md:text-center">
+                                <p className="text-[#d8f5ff] text-[11px] md:text-[22px] lg:text-[31px] font-semibold md:font-bold tracking-[0.03em] md:tracking-[0.035em] leading-5 md:leading-[1.22]">
+                                    前端 · 后端 · 人工智能 · 嵌入式 · 全链路协同
                                 </p>
-                                <p className="mt-1.5 text-[#a9d1e7] text-[10.5px] md:text-sm leading-[1.85] md:leading-6 tracking-[0.01em] max-w-[1100px] text-justify">
-                                    我们以 JavaScript/Vue/React 打造高质量交互体验，以 Java 构建稳定可靠的后端服务，
-                                    以 Python 驱动机器学习与智能分析，以 C/C++ 连接设备与边缘计算；并由策划运营协同推进、
-                                    产品设计持续打磨体验，形成从创意抽象到产品落地的一体化技术栈。
+                                <p className="mt-1.5 md:mt-0 text-[#a9d1e7] text-[10.5px] md:text-[14px] lg:text-[17px] leading-[1.85] md:leading-[1.72] tracking-[0.01em] max-w-[1100px] md:max-w-[1450px] text-justify">
+                                    我们以 JavaScript / Vue / React 构建高质量交互前端，以 Java 提供稳定后端服务，
+                                    以 Python / PyTorch 落地智能分析，以 C/C++ / STM32 / Linux 串联设备与边缘计算；
+                                    并由策划运营协同推进、产品设计持续打磨体验，完成从需求、研发到不断迭代的一体化工程技术栈。
+                                </p>
+                                <p className="hidden md:block text-[#cbeeff] md:text-[12px] lg:text-[15px] font-medium tracking-[0.07em] opacity-95">
+                                    React · Vue · Java · Python · PyTorch · C/C++ · STM32 · Linux · Docker
                                 </p>
                             </div>
                         </div>
