@@ -49,16 +49,7 @@ jobs:
           SERVER_USER: ${{ secrets.SERVER_USER }}
           TARGET_DIR: ${{ secrets.TARGET_DIR }}
         run: |
-          ssh -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" "mkdir -p '$TARGET_DIR'"
-
-      - name: Recreate dist directory on server
-        env:
-          SERVER_HOST: ${{ secrets.SERVER_HOST }}
-          SERVER_PORT: ${{ secrets.SERVER_PORT }}
-          SERVER_USER: ${{ secrets.SERVER_USER }}
-          TARGET_DIR: ${{ secrets.TARGET_DIR }}
-        run: |
-          ssh -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" "rm -rf '$TARGET_DIR/dist' && mkdir -p '$TARGET_DIR/dist'"
+          ssh -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" "mkdir -p '$TARGET_DIR/dist'"
 
       - name: Sync dist to server
         env:
@@ -67,7 +58,7 @@ jobs:
           SERVER_USER: ${{ secrets.SERVER_USER }}
           TARGET_DIR: ${{ secrets.TARGET_DIR }}
         run: |
-          rsync -az -e "ssh -p $SERVER_PORT" dist/ "$SERVER_USER@$SERVER_HOST:$TARGET_DIR/dist/"
+          rsync -az --delete --checksum -e "ssh -p $SERVER_PORT" dist/ "$SERVER_USER@$SERVER_HOST:$TARGET_DIR/dist/"
 
       - name: Reload nginx (optional)
         env:

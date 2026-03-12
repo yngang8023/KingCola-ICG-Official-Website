@@ -171,14 +171,6 @@ SPA 需要保证:
 - `push main` 自动触发
 - 手动触发 `workflow_dispatch`
 
-工作流执行内容:
-
-1. `npm ci`
-2. `npm run build`（会生成 `dist` 与 `.gz/.br` 预压缩资源）
-3. 通过 `SSH + rsync` 同步到服务器的 `TARGET_DIR/dist/`
-4. 同步前会重建服务器端 `dist` 目录（仅删除 `dist` 子目录，不影响同级其它文件）
-5. 可选执行 Nginx 重载命令
-
 需要在 GitHub 仓库 `Settings -> Secrets and variables -> Actions` 中配置:
 
 - `SERVER_HOST`: 云服务器公网 IP 或域名
