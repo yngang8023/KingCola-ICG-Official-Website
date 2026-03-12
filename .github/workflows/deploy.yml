@@ -70,11 +70,14 @@ jobs:
           rsync -az -e "ssh -p $SERVER_PORT" dist/ "$SERVER_USER@$SERVER_HOST:$TARGET_DIR/dist/"
 
       - name: Reload nginx (optional)
-        if: ${{ secrets.NGINX_RELOAD_COMMAND != '' }}
         env:
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
           SERVER_PORT: ${{ secrets.SERVER_PORT }}
           SERVER_USER: ${{ secrets.SERVER_USER }}
           NGINX_RELOAD_COMMAND: ${{ secrets.NGINX_RELOAD_COMMAND }}
         run: |
-          ssh -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" "$NGINX_RELOAD_COMMAND"
+          if [ -n "$NGINX_RELOAD_COMMAND" ]; then
+            ssh -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" "$NGINX_RELOAD_COMMAND"
+          else
+            echo "NGINX_RELOAD_COMMAND is empty, skipping reload."
+          fi
