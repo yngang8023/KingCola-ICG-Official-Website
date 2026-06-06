@@ -7,6 +7,31 @@
 This repository contains the frontend source code of the KingCola-ICG official website.  
 It is built with React + Vite and includes homepage visuals, project showcase, Markdown-driven project detail pages, events, development timeline, and skills pages.
 
+<table align="center">
+  <tr>
+    <td align="center"><strong>Vercel</strong></td>
+    <td align="center"><strong>EdgeOne Pages Global</strong></td>
+    <td align="center"><strong>EdgeOne Pages China Mainland</strong></td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fyngang8023%2FKingCola-ICG-Official-Website&project-name=kingcola-icg-official-website&repository-name=KingCola-ICG-Official-Website&root-directory=.&build-command=npm%20run%20build&output-directory=dist">
+        <img src="https://vercel.com/button" alt="Deploy with Vercel" />
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://edgeone.ai/pages/new?repository-url=https%3A%2F%2Fgithub.com%2Fyngang8023%2FKingCola-ICG-Official-Website&project-name=kingcola-icg-official-website&build-command=npm%20run%20build&install-command=npm%20install&output-directory=dist&root-directory=.">
+        <img src="https://cdnstatic.tencentcs.com/edgeone/pages/deploy.svg" alt="Deploy with EdgeOne Pages Global" height="32" />
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://console.cloud.tencent.com/edgeone/pages/new?repository-url=https%3A%2F%2Fgithub.com%2Fyngang8023%2FKingCola-ICG-Official-Website&project-name=kingcola-icg-official-website&build-command=npm%20run%20build&install-command=npm%20install&output-directory=dist&root-directory=.">
+        <img src="https://cdnstatic.tencentcs.com/edgeone/pages/deploy.svg" alt="Deploy with EdgeOne Pages China Mainland" height="32" />
+      </a>
+    </td>
+  </tr>
+</table>
+
 <p align="center">
   <img alt="React 18" src="https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=061a23" />
   <img alt="Vite 6" src="https://img.shields.io/badge/Vite-6-646CFF?style=for-the-badge&logo=vite&logoColor=ffffff" />
@@ -172,6 +197,19 @@ Edit `src/constants/Blogs/Articles.js`.
 
 ## 8. Deployment
 
+### One-click Deployment
+
+- Deploy to Vercel: click the Vercel button above to open the official project creation flow with this repository prefilled
+- Deploy to EdgeOne Pages Global: click the global button above to open the official international import flow with this repository and build settings prefilled
+- Deploy to EdgeOne Pages China Mainland: click the mainland button above to open Tencent Cloud's official domestic import flow with this repository and build settings prefilled
+
+Default deployment settings used by this repository:
+
+- install command: `npm install`
+- build command: `npm run build`
+- output directory: `dist`
+- Node.js version for EdgeOne Pages: `20.18.0` via `edgeone.json`
+
 ### 8.1 GitHub Pages Automated Deployment
 
 The repository already includes the GitHub Pages workflow:
@@ -207,8 +245,15 @@ This site can also be deployed directly to `EdgeOne Pages` for static hosting, C
 Recommended settings:
 
 - Build command: `npm run build`
+- Install command: `npm install`
 - Output directory: `dist`
 - SPA fallback: rewrite all sub-routes to `/index.html`
+
+This repository also includes:
+
+- `edgeone.json` for default EdgeOne Pages build configuration
+- prefilled EdgeOne Global deploy button parameters for faster import
+- prefilled EdgeOne China Mainland deploy button parameters based on Tencent Cloud's official Pages deploy-button format
 
 ### 8.3 Nginx
 
@@ -230,6 +275,11 @@ Recommended caching strategy:
 ### 8.4 Vercel
 
 `vercel.json` is included and already configured for SPA rewrites.
+
+This repository also includes:
+
+- prefilled Vercel deploy button parameters for one-click project import
+- a static output flow compatible with the default Vercel frontend deployment path
 
 ## 9. UX Notes
 

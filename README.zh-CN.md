@@ -6,6 +6,31 @@
 
 KingCola-ICG 团队官网前端项目，基于 React + Vite 构建，包含首页视觉展示、项目展示、项目详情、活动页面、发展历程与技能展示等内容模块。
 
+<table align="center">
+  <tr>
+    <td align="center"><strong>Vercel</strong></td>
+    <td align="center"><strong>EdgeOne Pages 国际版</strong></td>
+    <td align="center"><strong>EdgeOne Pages 国内版</strong></td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fyngang8023%2FKingCola-ICG-Official-Website&project-name=kingcola-icg-official-website&repository-name=KingCola-ICG-Official-Website&root-directory=.&build-command=npm%20run%20build&output-directory=dist">
+        <img src="https://vercel.com/button" alt="Deploy with Vercel" />
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://edgeone.ai/pages/new?repository-url=https%3A%2F%2Fgithub.com%2Fyngang8023%2FKingCola-ICG-Official-Website&project-name=kingcola-icg-official-website&build-command=npm%20run%20build&install-command=npm%20install&output-directory=dist&root-directory=.">
+        <img src="https://cdnstatic.tencentcs.com/edgeone/pages/deploy.svg" alt="Deploy with EdgeOne Pages Global" height="32" />
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://console.cloud.tencent.com/edgeone/pages/new?repository-url=https%3A%2F%2Fgithub.com%2Fyngang8023%2FKingCola-ICG-Official-Website&project-name=kingcola-icg-official-website&build-command=npm%20run%20build&install-command=npm%20install&output-directory=dist&root-directory=.">
+        <img src="https://cdnstatic.tencentcs.com/edgeone/pages/deploy.svg" alt="Deploy with EdgeOne Pages China Mainland" height="32" />
+      </a>
+    </td>
+  </tr>
+</table>
+
 <p align="center">
   <img alt="React 18" src="https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=061a23" />
   <img alt="Vite 6" src="https://img.shields.io/badge/Vite-6-646CFF?style=for-the-badge&logo=vite&logoColor=ffffff" />
@@ -170,6 +195,19 @@ Markdown 正文会自动渲染到项目详情页。
 
 ## 8. 部署
 
+### 一键部署
+
+- 部署到 Vercel：点击上方按钮后，会进入 Vercel 官方创建项目流程，并自动带入当前仓库地址
+- 部署到 EdgeOne Pages 国际版：点击对应按钮后，会进入 EdgeOne Pages 国际站官方导入流程，并自动带入当前仓库地址与构建参数
+- 部署到 EdgeOne Pages 国内版：点击对应按钮后，会进入腾讯云中国站官方导入流程，并自动带入当前仓库地址与构建参数
+
+当前仓库默认部署参数:
+
+- 安装命令: `npm install`
+- 构建命令: `npm run build`
+- 输出目录: `dist`
+- EdgeOne Pages Node.js 版本: `20.18.0`，已在 `edgeone.json` 中声明
+
 ### 8.1 GitHub Pages 自动部署
 
 仓库已内置 GitHub Pages 工作流:
@@ -205,8 +243,15 @@ Markdown 正文会自动渲染到项目详情页。
 建议配置:
 
 - 构建命令: `npm run build`
+- 安装命令: `npm install`
 - 输出目录: `dist`
 - 路由回退: 所有子路由回退到 `/index.html`
+
+仓库中已补充:
+
+- `edgeone.json`，用于约定 EdgeOne Pages 默认构建配置
+- 已预填参数的国际版一键部署按钮，便于直接导入当前仓库
+- 基于腾讯云官方部署按钮文档补充的国内版一键部署按钮，便于直接导入当前仓库
 
 ### 8.3 Nginx 部署
 
@@ -228,6 +273,11 @@ SPA 需保证:
 ### 8.4 Vercel 部署
 
 项目保留了 `vercel.json`，并已配置 SPA rewrite。
+
+仓库中已补充:
+
+- 已预填参数的一键部署按钮，可直接跳转到 Vercel 导入当前仓库
+- 与静态前端部署方式兼容的默认输出配置
 
 ## 9. 用户体验说明
 
