@@ -645,7 +645,7 @@ const Homepage = () => {
                         className="justify-center mt-24 md:mt-8 md:min-h-[42vh] px-4 md:px-6 py-6 md:py-8 rounded-[22px] bg-[linear-gradient(180deg,rgba(5,11,20,0.58)_0%,rgba(4,8,15,0.38)_100%)] border border-white/10 shadow-[0_12px_30px_rgba(0,0,0,0.2)] backdrop-blur-[4px]"
                     >
                         <div className="text-white font-[700] mx-1 text-2xl md:text-[2.05rem] tracking-[0.01em]">
-                            KingCola-ICG Introduction
+                            KingCola-ICG 介绍
                         </div>
                         <div className="mx-1 mt-3 h-[3px] w-24 rounded-full bg-gradient-to-r from-[#8ed8ff] to-[#2ca6e3] shadow-[0_0_12px_rgba(142,216,255,0.55)]" />
                         <div className="px-1 text-[15px] md:text-[1rem] text-[#b9c9d7] text-justify mt-4 font-[500] leading-7">

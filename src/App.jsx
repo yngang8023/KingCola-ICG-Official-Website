@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useState } from "react";
+import React, { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Navbar } from "./components";
@@ -13,7 +13,6 @@ const Envents = lazy(() => import("./pages/Envents"));
 const Development = lazy(() => import("./pages/Development"));
 const Skills = lazy(() => import("./pages/Skills"));
 const Error = lazy(() => import("./pages/Error"));
-const ROUTE_LOADING_BLOCKING_MS = 1800;
 const ROUTE_LOADING_TIMEOUT_MS = 7000;
 const APP_BASENAME = import.meta.env.BASE_URL?.replace(/\/$/, "") || "";
 
@@ -36,47 +35,22 @@ const RouteReady = ({ onReady, children }) => {
   return children;
 };
 
-const RouteContentFallback = ({
-  isBlocking = false,
-  onTimeout,
-  onRetry,
-  onGoHome,
-}) => (
-  <LoadingPage
-    compact={!isBlocking}
-    fullscreen={isBlocking}
-    timeoutMs={ROUTE_LOADING_TIMEOUT_MS}
-    onTimeout={onTimeout}
-    onRetry={onRetry}
-    onGoHome={onGoHome}
-  />
-);
-
 function AppContent() {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
   const isEnventsPage = location.pathname === "/envents";
   const [homeNavOpacity, setHomeNavOpacity] = useState(0);
   const [lastReadyPath, setLastReadyPath] = useState("");
-  const [isRouteLoading, setIsRouteLoading] = useState(true);
-  const [isRouteTimedOut, setIsRouteTimedOut] = useState(false);
   const hasMainContentShown = lastReadyPath !== "";
   const isRoutePending = lastReadyPath !== location.pathname;
+  const showRouteLoader = isRoutePending;
   const useOverlayNavbar = isHomePage || isEnventsPage;
-  const effectiveOverlayNavbar = useOverlayNavbar && !isRouteTimedOut;
-  const shouldUseRouteLoader = !hasMainContentShown;
-  const canShowPersistentUi = hasMainContentShown && !isRoutePending;
+  const effectiveOverlayNavbar = useOverlayNavbar && !showRouteLoader;
+  const showAppChrome = hasMainContentShown && !showRouteLoader;
 
   const markRouteReady = useCallback(() => {
     setLastReadyPath(location.pathname);
-    setIsRouteTimedOut(false);
-    setIsRouteLoading(false);
   }, [location.pathname]);
-
-  const handleRouteTimeout = useCallback(() => {
-    setIsRouteTimedOut(true);
-    setIsRouteLoading(false);
-  }, []);
 
   const handleRouteRetry = useCallback(() => {
     window.location.reload();
@@ -90,55 +64,14 @@ function AppContent() {
     window.location.href = APP_BASENAME || "/";
   }, [location.pathname]);
 
-  const routeFallback = useMemo(
-    () => (
-      <RouteContentFallback
-        isBlocking={shouldUseRouteLoader && !isRouteTimedOut && isRouteLoading}
-        onTimeout={handleRouteTimeout}
-        onRetry={handleRouteRetry}
-        onGoHome={handleGoHome}
-      />
-    ),
-    [
-      handleGoHome,
-      handleRouteRetry,
-      handleRouteTimeout,
-      isRouteLoading,
-      isRouteTimedOut,
-      shouldUseRouteLoader,
-    ]
-  );
-
   const renderRouteElement = (PageComponent) =>
     wrapWithRouteTransition(
-      <Suspense fallback={routeFallback}>
+      <Suspense fallback={null}>
         <RouteReady onReady={markRouteReady}>
           <PageComponent />
         </RouteReady>
       </Suspense>
     );
-
-  useLayoutEffect(() => {
-    setIsRouteTimedOut(false);
-
-    if (hasMainContentShown) {
-      setIsRouteLoading(false);
-      return;
-    }
-    setIsRouteLoading(true);
-  }, [location.pathname, hasMainContentShown]);
-
-  useEffect(() => {
-    if (hasMainContentShown) return undefined;
-
-    const blockerTimer = window.setTimeout(() => {
-      setIsRouteLoading(false);
-    }, ROUTE_LOADING_BLOCKING_MS);
-
-    return () => {
-      window.clearTimeout(blockerTimer);
-    };
-  }, [location.pathname, hasMainContentShown]);
 
   useEffect(() => {
     if (!isHomePage && !isEnventsPage) {
@@ -214,9 +147,9 @@ function AppContent() {
           {" "}
         </div>
       </div> */}
-      <Navbar navOpacity={effectiveOverlayNavbar ? homeNavOpacity : 1} />
+      {showAppChrome && <Navbar navOpacity={effectiveOverlayNavbar ? homeNavOpacity : 1} />}
       <div
-        className={`${effectiveOverlayNavbar ? "" : "pt-20"} min-h-[calc(100vh-5rem)]`}
+        className={`${showAppChrome && !effectiveOverlayNavbar ? "pt-20" : ""} min-h-[calc(100vh-5rem)]`}
       >
         <AnimatePresence mode="wait" initial={false}>
           <Routes location={location} key={location.pathname}>
@@ -230,9 +163,17 @@ function AppContent() {
           </Routes>
         </AnimatePresence>
       </div>
-      {hasMainContentShown && <BackToTopButton />}
+      {showRouteLoader && (
+        <LoadingPage
+          fullscreen
+          timeoutMs={ROUTE_LOADING_TIMEOUT_MS}
+          onRetry={handleRouteRetry}
+          onGoHome={handleGoHome}
+        />
+      )}
+      {showAppChrome && <BackToTopButton />}
 
-      {hasMainContentShown && <Footer />}
+      {showAppChrome && <Footer />}
     </div>
   );
 }
