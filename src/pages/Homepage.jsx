@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { Suspense, useRef, useState, useEffect } from "react";
 import {
     Card,
     DarkVeil,
@@ -162,7 +162,32 @@ const STACK_LOGO_ROWS = [
     },
 ];
 
-
+const FluidGlassFallback = ({ isMobileViewport = false }) => (
+    <div className="relative h-full w-full overflow-hidden bg-[#04070d]">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(105,214,255,0.16),transparent_34%),radial-gradient(circle_at_80%_72%,rgba(52,118,255,0.16),transparent_32%),linear-gradient(180deg,#04070d_0%,#071321_100%)]" />
+        <div className="relative z-10 flex h-full min-h-[24rem] flex-col items-center justify-center px-6 text-center">
+            <div className="mb-4 rounded-full border border-[#8ed8ff]/30 bg-[#0a1830]/68 px-5 py-2 text-sm font-semibold tracking-[0.12em] text-[#dff4ff] shadow-[0_0_28px_rgba(80,181,255,0.18)]">
+                KingCola ICG
+            </div>
+            <h3 className="max-w-[18ch] text-2xl font-semibold leading-tight text-white md:text-4xl">
+                Welcome to
+                <br />
+                Join us.
+            </h3>
+            <p className="mt-3 max-w-xl text-sm leading-7 text-[#a9d7f4] md:text-base">
+                页面正在加载视觉展示模块，核心内容已保持可访问，不会影响整页浏览体验。
+            </p>
+            <div className={`mt-8 grid gap-3 ${isMobileViewport ? "w-full max-w-[22rem] grid-cols-1" : "w-full max-w-[38rem] grid-cols-3"}`}>
+                {[1, 2, 3].map((item) => (
+                    <div
+                        key={item}
+                        className="h-28 rounded-2xl border border-white/10 bg-[linear-gradient(160deg,rgba(12,26,48,0.9),rgba(8,17,30,0.7))] shadow-[0_12px_28px_rgba(3,9,20,0.35)] md:h-36"
+                    />
+                ))}
+            </div>
+        </div>
+    </div>
+);
 
 const Homepage = () => {
     const box1Ref = useRef(null);
@@ -1053,25 +1078,27 @@ const Homepage = () => {
                                     : "sticky top-[5rem] h-[calc(100dvh_-_5rem)] min-h-[24rem]"
                                     } overflow-hidden bg-[#04070d]`}
                             >
-                                <FluidGlass
-                                    mode="cube"
-                                    progress={fluidScrollProgress}
-                                    headline="KingCola ICG"
-                                    frontHeadline="KingCola ICG"
-                                    backHeadline={"Welcome to\nJoin us."}
-                                    showGallery={true}
-                                    backgroundColor={0x04070d}
-                                    preferStaticFallback={isMobileViewport}
-                                    cubeProps={{
-                                        scale: isMobileViewport ? 0.19 : 0.25,
-                                        ior: 1.15,
-                                        thickness: 5,
-                                        transmission: 1,
-                                        roughness: 0,
-                                        chromaticAberration: 0.1,
-                                        anisotropy: 0.01,
-                                    }}
-                                />
+                                <Suspense fallback={<FluidGlassFallback isMobileViewport={isMobileViewport} />}>
+                                    <FluidGlass
+                                        mode="cube"
+                                        progress={fluidScrollProgress}
+                                        headline="KingCola ICG"
+                                        frontHeadline="KingCola ICG"
+                                        backHeadline={"Welcome to\nJoin us."}
+                                        showGallery={true}
+                                        backgroundColor={0x04070d}
+                                        preferStaticFallback={isMobileViewport}
+                                        cubeProps={{
+                                            scale: isMobileViewport ? 0.19 : 0.25,
+                                            ior: 1.15,
+                                            thickness: 5,
+                                            transmission: 1,
+                                            roughness: 0,
+                                            chromaticAberration: 0.1,
+                                            anisotropy: 0.01,
+                                        }}
+                                    />
+                                </Suspense>
                             </div>
                         </div>
                     </section>

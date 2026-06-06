@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useState } from "react";
+import React, { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Navbar } from "./components";
@@ -15,6 +15,7 @@ const Skills = lazy(() => import("./pages/Skills"));
 const Error = lazy(() => import("./pages/Error"));
 const ROUTE_LOADING_BLOCKING_MS = 1800;
 const ROUTE_LOADING_TIMEOUT_MS = 7000;
+const APP_BASENAME = import.meta.env.BASE_URL?.replace(/\/$/, "") || "";
 
 const wrapWithRouteTransition = (element) => (
   <motion.div
@@ -34,6 +35,22 @@ const RouteReady = ({ onReady, children }) => {
 
   return children;
 };
+
+const RouteContentFallback = ({
+  isBlocking = false,
+  onTimeout,
+  onRetry,
+  onGoHome,
+}) => (
+  <LoadingPage
+    compact={!isBlocking}
+    fullscreen={isBlocking}
+    timeoutMs={ROUTE_LOADING_TIMEOUT_MS}
+    onTimeout={onTimeout}
+    onRetry={onRetry}
+    onGoHome={onGoHome}
+  />
+);
 
 function AppContent() {
   const location = useLocation();
@@ -70,25 +87,31 @@ function AppContent() {
       window.location.reload();
       return;
     }
-    window.location.href = "/";
+    window.location.href = APP_BASENAME || "/";
   }, [location.pathname]);
+
+  const routeFallback = useMemo(
+    () => (
+      <RouteContentFallback
+        isBlocking={shouldUseRouteLoader && !isRouteTimedOut && isRouteLoading}
+        onTimeout={handleRouteTimeout}
+        onRetry={handleRouteRetry}
+        onGoHome={handleGoHome}
+      />
+    ),
+    [
+      handleGoHome,
+      handleRouteRetry,
+      handleRouteTimeout,
+      isRouteLoading,
+      isRouteTimedOut,
+      shouldUseRouteLoader,
+    ]
+  );
 
   const renderRouteElement = (PageComponent) =>
     wrapWithRouteTransition(
-      <Suspense
-        fallback={
-          shouldUseRouteLoader ? (
-            <LoadingPage
-              compact={!isRouteLoading}
-              fullscreen={!isRouteTimedOut && isRouteLoading}
-              timeoutMs={ROUTE_LOADING_TIMEOUT_MS}
-              onTimeout={handleRouteTimeout}
-              onRetry={handleRouteRetry}
-              onGoHome={handleGoHome}
-            />
-          ) : null
-        }
-      >
+      <Suspense fallback={routeFallback}>
         <RouteReady onReady={markRouteReady}>
           <PageComponent />
         </RouteReady>
@@ -192,7 +215,9 @@ function AppContent() {
         </div>
       </div> */}
       <Navbar navOpacity={effectiveOverlayNavbar ? homeNavOpacity : 1} />
-      <div className={effectiveOverlayNavbar ? "" : "pt-20"}>
+      <div
+        className={`${effectiveOverlayNavbar ? "" : "pt-20"} min-h-[calc(100vh-5rem)]`}
+      >
         <AnimatePresence mode="wait" initial={false}>
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={renderRouteElement(Homepage)}></Route>
@@ -205,16 +230,16 @@ function AppContent() {
           </Routes>
         </AnimatePresence>
       </div>
-      {canShowPersistentUi && <BackToTopButton />}
+      {hasMainContentShown && <BackToTopButton />}
 
-      {canShowPersistentUi && <Footer />}
+      {hasMainContentShown && <Footer />}
     </div>
   );
 }
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={APP_BASENAME || undefined}>
       <AppContent />
     </BrowserRouter>
   );

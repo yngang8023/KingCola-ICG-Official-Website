@@ -139,15 +139,22 @@ const Footer = () => {
                     </a>
                 </div>
                 <div className="security-info-container">
-                    <span>本站由</span>
-                    <a href="http://defense.yunaq.com" target="_blank" rel="noreferrer" className="yunaq-link">
+                    <span>本站由 EdgeOne Pages </span>
+                    <a
+                        href="https://edgeone.ai/products/pages"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="security-provider-link"
+                        aria-label="EdgeOne Pages"
+                        title="EdgeOne Pages"
+                    >
                         <img
-                            src="https://www.yunaq.com/common-module/static/footer/stat3.png"
-                            alt="知道创宇云防御"
-                            className="yunaq-icon"
+                            src="https://edgeone.ai/128.png"
+                            alt="EdgeOne"
+                            className="security-provider-icon"
                         />
                     </a>
-                    <span>提供安全加速CDN服务</span>
+                    <span>提供全球 CDN 加速与边缘部署服务</span>
                 </div>
             </div>
             </footer>

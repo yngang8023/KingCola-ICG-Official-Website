@@ -3,6 +3,7 @@ import { logopng } from "../assets";
 import "./css/LoadingPage.css";
 
 const BRAND_LETTERS = ["K", "I", "N", "G", "C", "O", "L", "A"];
+const APP_BASENAME = import.meta.env.BASE_URL?.replace(/\/$/, "") || "";
 
 const LoadingPage = ({
   compact = false,
@@ -43,7 +44,7 @@ const LoadingPage = ({
       onGoHome();
       return;
     }
-    window.location.href = "/";
+    window.location.href = APP_BASENAME || "/";
   };
 
   let rootClassName = "kc-loader";

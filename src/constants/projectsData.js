@@ -4,6 +4,8 @@ const markdownModules = import.meta.glob("../assets/md/projects/*.md", {
   import: "default",
 });
 
+export const projectCohortOrder = ["24级", "23级", "22级"];
+
 const ARRAY_KEYS = new Set(["techStack", "keywords"]);
 const NUMBER_KEYS = new Set([
   "stargazers_count",
@@ -138,12 +140,47 @@ const inferLanguage = (metaLanguage, techStack) => {
   return "未分类";
 };
 
-const toContributors = (keywords, htmlUrl) =>
+const toContributors = (keywords) =>
   keywords.map((keyword, index) => ({
     id: index + 1,
     login: keyword,
-    html_url: htmlUrl || "",
+    html_url: "",
   }));
+
+export const groupProjectsByCohort = (projects = []) => {
+  const grouped = projectCohortOrder.reduce((accumulator, cohort) => {
+    accumulator[cohort] = [];
+    return accumulator;
+  }, {});
+  const extras = [];
+
+  projects.forEach((project) => {
+    const cohort = typeof project?.cohort === "string" ? project.cohort.trim() : "";
+    if (cohort && grouped[cohort]) {
+      grouped[cohort].push(project);
+      return;
+    }
+    extras.push(project);
+  });
+
+  const orderedGroups = projectCohortOrder
+    .map((cohort) => ({
+      cohort,
+      label: `${cohort}项目`,
+      projects: grouped[cohort],
+    }))
+    .filter((group) => group.projects.length > 0);
+
+  if (extras.length > 0) {
+    orderedGroups.push({
+      cohort: "其他",
+      label: "其他项目",
+      projects: extras,
+    });
+  }
+
+  return orderedGroups;
+};
 
 const parsedProjects = Object.entries(markdownModules)
   .filter(([path]) => !getFileNameWithoutExt(path).startsWith("_"))
@@ -163,23 +200,21 @@ const parsedProjects = Object.entries(markdownModules)
 
     const name = meta.name || getFirstHeading(body) || fileKey;
     const description = meta.description || getFirstParagraph(body) || `${name} 项目详情`;
-    const htmlUrl = meta.html_url || "";
-
     return {
       id: meta.id || fileKey,
       name,
       icon: meta.icon || "",
+      cohort: meta.cohort || "",
       language: inferLanguage(meta.language, techStack),
       techStack,
       keywords,
       description,
-      html_url: htmlUrl,
       homepage: meta.homepage || "",
       stargazers_count: Number.isFinite(meta.stargazers_count) ? meta.stargazers_count : 0,
       forks_count: Number.isFinite(meta.forks_count) ? meta.forks_count : 0,
       watchers_count: Number.isFinite(meta.watchers_count) ? meta.watchers_count : 0,
       open_issues: Number.isFinite(meta.open_issues) ? meta.open_issues : 0,
-      contributors: toContributors(keywords, htmlUrl),
+      contributors: toContributors(keywords),
       detail: body,
       __order: Number.isFinite(meta.order) ? meta.order : index + 1,
     };

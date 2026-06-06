@@ -3,20 +3,42 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" href="%BASE_URL%favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
   <meta name="description" content="KingCola-ICG 官方网站，湖南科技大学创新创业学生团队，聚焦技术实践、项目展示、竞赛活动与成员成长。" />
-  <link rel="apple-touch-icon" href="/logo192.png" />
+  <link rel="apple-touch-icon" href="%BASE_URL%logo192.png" />
   <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-  <link rel="manifest" href="/manifest.json" />
+  <link rel="manifest" href="%BASE_URL%manifest.json" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var redirectedPath = params.get("p");
+      if (!redirectedPath) return;
+
+      var restoredPath = decodeURIComponent(redirectedPath);
+      var query = params.get("q");
+      var repoBase = window.location.pathname.replace(/\/$/, "");
+      var nextUrl = repoBase + restoredPath;
+
+      if (query) {
+        nextUrl += "?" + decodeURIComponent(query);
+      }
+
+      if (window.location.hash) {
+        nextUrl += window.location.hash;
+      }
+
+      window.history.replaceState(null, "", nextUrl);
+    })();
+  </script>
   <title>KingCola-ICG | 湖南科技大学创新创业学生团队官网</title>
 </head>
 

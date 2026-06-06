@@ -7,7 +7,7 @@ It is built with React + Vite and includes homepage visuals, project showcase, M
 
 - Project name: `kingcola-icg-official-website`
 - Type: Visual-first team official website
-- Runtime model: Static frontend site (deployable on Nginx, Vercel, etc.)
+- Runtime model: Static frontend site (currently suited for EdgeOne Pages, and also adaptable to Nginx or Vercel)
 
 ## 2. Tech Stack
 
@@ -118,7 +118,6 @@ Main frontmatter fields:
 - `description`: one-line summary
 - `techStack`: tech stack array
 - `keywords`: keyword/member tags
-- `html_url`: external link
 - `order`: sort weight (smaller means earlier)
 
 Markdown body is rendered automatically on the project detail page.

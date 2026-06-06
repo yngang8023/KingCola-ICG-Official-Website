@@ -2,16 +2,16 @@
 id: zhihu-mangtu
 name: 智护盲途
 icon: blind
+cohort: 23级
 language: Python
 techStack: [UniApp, JavaScript, Vue, Java, Python]
 description: 基于 YOLOv5 的盲道监测综合系统，面向无障碍治理与公众协同反馈。
 keywords: [vision-yolo, barrier-free-lab, city-governance]
-html_url: https://github.com/openlake/zhihu-mangtu
 stargazers_count: 666
 forks_count: 666
 watchers_count: 666
 open_issues: 14
-order: 4
+order: 5
 ---
 
 # 智护盲途——基于YOLOv5的盲道监测综合系统

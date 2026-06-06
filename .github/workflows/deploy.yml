@@ -1,4 +1,4 @@
-name: Deploy Website
+name: Deploy To GitHub Pages
 
 on:
   push:
@@ -6,12 +6,17 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 concurrency:
-  group: deploy-production
+  group: github-pages
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -23,52 +28,29 @@ jobs:
           node-version: 20
           cache: npm
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
       - name: Install dependencies
         run: npm ci
 
       - name: Build website
-        run: npm run build
+        env:
+          GITHUB_ACTIONS: "true"
+        run: npm run build:raw
 
-      - name: Start SSH agent
-        uses: webfactory/ssh-agent@v0.9.0
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
+          path: ./dist
 
-      - name: Add host key
-        env:
-          SERVER_HOST: ${{ secrets.SERVER_HOST }}
-          SERVER_PORT: ${{ secrets.SERVER_PORT }}
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -p "$SERVER_PORT" -H "$SERVER_HOST" >> ~/.ssh/known_hosts
-
-      - name: Ensure deploy directory exists
-        env:
-          SERVER_HOST: ${{ secrets.SERVER_HOST }}
-          SERVER_PORT: ${{ secrets.SERVER_PORT }}
-          SERVER_USER: ${{ secrets.SERVER_USER }}
-          TARGET_DIR: ${{ secrets.TARGET_DIR }}
-        run: |
-          ssh -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" "mkdir -p '$TARGET_DIR/dist'"
-
-      - name: Sync dist to server
-        env:
-          SERVER_HOST: ${{ secrets.SERVER_HOST }}
-          SERVER_PORT: ${{ secrets.SERVER_PORT }}
-          SERVER_USER: ${{ secrets.SERVER_USER }}
-          TARGET_DIR: ${{ secrets.TARGET_DIR }}
-        run: |
-          rsync -az --delete --checksum -e "ssh -p $SERVER_PORT" dist/ "$SERVER_USER@$SERVER_HOST:$TARGET_DIR/dist/"
-
-      - name: Reload nginx (optional)
-        env:
-          SERVER_HOST: ${{ secrets.SERVER_HOST }}
-          SERVER_PORT: ${{ secrets.SERVER_PORT }}
-          SERVER_USER: ${{ secrets.SERVER_USER }}
-          NGINX_RELOAD_COMMAND: ${{ secrets.NGINX_RELOAD_COMMAND }}
-        run: |
-          if [ -n "$NGINX_RELOAD_COMMAND" ]; then
-            ssh -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" "$NGINX_RELOAD_COMMAND"
-          else
-            echo "NGINX_RELOAD_COMMAND is empty, skipping reload."
-          fi
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

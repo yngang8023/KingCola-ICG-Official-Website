@@ -2,16 +2,16 @@
 id: yuntai-zhiji
 name: 云台智击
 icon: robot
+cohort: 23级
 language: C++
 techStack: [UniApp, JavaScript, Java, Python, C++]
 description: 基于机械臂控制与远程联机的台球助手，支持人机对打与异地真实对局。
 keywords: [robotic-strike, maixcam-lab, remote-billiard]
-html_url: https://github.com/openlake/yuntai-zhiji
 stargazers_count: 666
 forks_count: 666
 watchers_count: 666
 open_issues: 9
-order: 6
+order: 7
 ---
 
 # 云台智击——基于机械臂控制和远程控制的台球助手

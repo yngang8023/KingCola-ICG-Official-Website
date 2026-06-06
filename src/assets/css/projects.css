@@ -72,6 +72,53 @@
   /* text-transform: capita; */
 }
 
+.project-cohort-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.project-cohort-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.project-cohort-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid rgba(126, 215, 255, 0.24);
+}
+
+.project-cohort-title {
+  color: #ffffff;
+  font-size: 1.55rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.project-cohort-count {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(126, 215, 255, 0.25);
+  background: rgba(44, 166, 227, 0.12);
+  color: #d9efff;
+  font-size: 0.92rem;
+  white-space: nowrap;
+}
+
+.project-empty-state {
+  padding: 4rem 0;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  font-size: 1.05rem;
+}
+
 @media (max-width: 768px) {
   .repo-card {
     width: 100%;
@@ -89,6 +136,13 @@
   .repo-name{
     font-size: 15px;
   }
+  .project-cohort-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .project-cohort-title {
+    font-size: 1.22rem;
+  }
   .HeaderDot{
     left:0px;
   }
@@ -97,5 +151,4 @@
     right: 0;
   }
 }
-
 

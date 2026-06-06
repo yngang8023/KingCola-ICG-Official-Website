@@ -2,16 +2,16 @@
 id: zihu-star
 name: 姿护星
 icon: rehab
+cohort: 24级
 language: C++
 techStack: [JavaScript, UniApp, Java, Python, C++]
 description: 可穿戴式下肢康复智能监测与辅助训练系统，支持实时识别与语音纠正。
 keywords: [rehab-engine, icg-hardware, star-med]
-html_url: https://github.com/openlake/zihu-star
 stargazers_count: 666
 forks_count: 666
 watchers_count: 666
 open_issues: 12
-order: 1
+order: 2
 ---
 
 # 姿护星

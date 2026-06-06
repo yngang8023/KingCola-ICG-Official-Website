@@ -3,7 +3,7 @@ import { HeaderDot, Card } from "../components";
 import "../assets/css/projects.css";
 import Xarrow from "react-xarrows";
 import { FaFilter } from "react-icons/fa";
-import { projectsData } from "../constants/projectsData";
+import { groupProjectsByCohort, projectsData } from "../constants/projectsData";
 const Projects = () => {
   const box1Ref = useRef(null);
   const box2Ref = useRef(null);
@@ -20,6 +20,11 @@ const Projects = () => {
       return stack.some((tech) => normalizeTech(tech) === selected);
     });
   }, [repos, selectedTech]);
+
+  const groupedRepos = useMemo(
+    () => groupProjectsByCohort(filteredRepos),
+    [filteredRepos]
+  );
 
   const techOptions = useMemo(
     () =>
@@ -120,31 +125,43 @@ const Projects = () => {
                       {/* Add more buttons for other languages */}
                     </div>
                   )}
-                </div>
-                    <h1 ref={box1Ref} className="repo-name font-[600]">
-                  {selectedTech || "展示"} 项目
+              </div>
+                <h1 ref={box1Ref} className="repo-name font-[600]">
+                  {selectedTech ? `${selectedTech} 项目` : "全部项目"}
                 </h1>
               </div>
-              <div className="repo-cards">
-                {Array.isArray(filteredRepos) ? (
-                  filteredRepos.map((repo, index) => (
-                    <Card
-                      key={repo.id}
-                      repo={repo}
-                      className={
-                        index % 8 === 0 ||
-                          index % 8 === 2 ||
-                          index % 8 === 5 ||
-                          index % 8 === 7
-                          ? "even-card animate__animated animate__backInLeft"
-                          : "odd-card animate__animated animate__backInRight"
-                      }
-                    />
-                  ))
-                ) : (
-                  <p>暂无项目数据</p>
-                )}
-              </div>
+              {groupedRepos.length > 0 ? (
+                <div className="project-cohort-list">
+                  {groupedRepos.map((group) => (
+                    <section key={group.cohort} className="project-cohort-section">
+                      <div className="project-cohort-head">
+                        <h2 className="project-cohort-title">{group.label}</h2>
+                        <span className="project-cohort-count">
+                          {group.projects.length} 个项目
+                        </span>
+                      </div>
+                      <div className="repo-cards">
+                        {group.projects.map((repo, index) => (
+                          <Card
+                            key={repo.id}
+                            repo={repo}
+                            className={
+                              index % 8 === 0 ||
+                                index % 8 === 2 ||
+                                index % 8 === 5 ||
+                                index % 8 === 7
+                                ? "even-card animate__animated animate__backInLeft"
+                                : "odd-card animate__animated animate__backInRight"
+                            }
+                          />
+                        ))}
+                      </div>
+                    </section>
+                  ))}
+                </div>
+              ) : (
+                <p className="project-empty-state">暂无匹配项目</p>
+              )}
               {/* <AdvancedCarousel/> */}
             </div>
           </div>

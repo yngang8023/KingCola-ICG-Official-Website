@@ -2,11 +2,11 @@
 id: jinshen-zhikong
 name: 金审智控
 icon: shield
+cohort: 24级
 language: Java
 techStack: [Vue, JavaScript, Java, Python, C++]
 description: 基于物联网与计算机视觉的金融风控平台，提供贷前审核到贷后预警全流程能力。
 keywords: [fin-risk-ai, edge-sensor-lab, icg-fintech]
-html_url: https://github.com/openlake/jinshen-zhikong
 stargazers_count: 666
 forks_count: 666
 watchers_count: 666

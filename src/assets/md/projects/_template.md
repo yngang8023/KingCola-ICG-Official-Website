@@ -6,7 +6,6 @@ language: JavaScript
 techStack: [JavaScript, Vue, Java, Python, C++]
 description: 这里填写项目的一句话简介。
 keywords: [keyword-1, keyword-2, keyword-3]
-html_url: https://github.com/your-org/your-project
 stargazers_count: 0
 forks_count: 0
 watchers_count: 0

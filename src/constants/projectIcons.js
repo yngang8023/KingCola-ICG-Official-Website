@@ -5,6 +5,11 @@ import {
   FaBlind,
   FaRoad,
   FaRobot,
+  FaMobileAlt,
+  FaRecycle,
+  FaBullhorn,
+  FaSeedling,
+  FaStar,
   FaFolderOpen,
 } from "react-icons/fa";
 
@@ -15,16 +20,26 @@ const ICON_COMPONENTS = {
   blind: FaBlind,
   road: FaRoad,
   robot: FaRobot,
+  mobile: FaMobileAlt,
+  recycle: FaRecycle,
+  bullhorn: FaBullhorn,
+  seedling: FaSeedling,
+  star: FaStar,
   folder: FaFolderOpen,
 };
 
 const ID_ICON_FALLBACK = {
+  "lumix-agent": "mobile",
   "zihu-star": "rehab",
   "jinshen-zhikong": "shield",
   "wenshu-suixing": "route",
   "zhihu-mangtu": "blind",
   "zhitu-anxing": "road",
   "yuntai-zhiji": "robot",
+  "jietu-zhixing": "recycle",
+  "wenming-weishi": "bullhorn",
+  "nongyun-shidai": "seedling",
+  "xinghe-growth": "star",
 };
 
 export const getProjectIconKey = (project) => {
@@ -35,4 +50,3 @@ export const getProjectIconKey = (project) => {
 };
 
 export const getProjectIcon = (project) => ICON_COMPONENTS[getProjectIconKey(project)] || FaFolderOpen;
-

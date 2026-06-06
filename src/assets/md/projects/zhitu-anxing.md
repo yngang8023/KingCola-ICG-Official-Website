@@ -2,16 +2,16 @@
 id: zhitu-anxing
 name: 智途安行
 icon: road
+cohort: 23级
 language: Vue
 techStack: [Vue, JavaScript, Java, Python, C++]
 description: 多模态地面检测与可视化系统，实现道路缺陷自动识别与地图分级展示。
 keywords: [road-scan, urban-ai, icg-maintain]
-html_url: https://github.com/openlake/zhitu-anxing
 stargazers_count: 666
 forks_count: 666
 watchers_count: 666
 open_issues: 11
-order: 5
+order: 6
 ---
 
 # 智途安行——多模态地面检测与可视化系统

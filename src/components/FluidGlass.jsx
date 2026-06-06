@@ -5,6 +5,7 @@ import { Canvas, createPortal, useFrame, useThree } from '@react-three/fiber';
 import {
   useFBO,
   useGLTF,
+  useTexture,
   useScroll,
   Image,
   Scroll,
@@ -20,6 +21,8 @@ import lensModelPath from '@/assets/3d/lens.glb';
 import demoCs1Path from '@/assets/demo/cs1.webp';
 import demoCs2Path from '@/assets/demo/cs2.webp';
 import demoCs3Path from '@/assets/demo/cs3.webp';
+
+const STABLE_3D_FONT_URL = '/fonts/segoeui.ttf';
 
 export default function FluidGlass({
   mode = 'lens',
@@ -68,11 +71,9 @@ export default function FluidGlass({
 
     const testCanvas = document.createElement('canvas');
     const hasWebGL =
-      !!testCanvas.getContext('webgl2', { failIfMajorPerformanceCaveat: true }) ||
-      !!testCanvas.getContext('webgl', { failIfMajorPerformanceCaveat: true }) ||
-      !!testCanvas.getContext('experimental-webgl', {
-        failIfMajorPerformanceCaveat: true,
-      });
+      !!testCanvas.getContext('webgl2') ||
+      !!testCanvas.getContext('webgl') ||
+      !!testCanvas.getContext('experimental-webgl');
 
     if (!hasWebGL) {
       setRuntimeFallback(true);
@@ -601,6 +602,7 @@ function Typography({ text = 'React Bits' }) {
   return (
     <Text
       position={[0, 0, 12]}
+      font={STABLE_3D_FONT_URL}
       fontSize={fontSize}
       letterSpacing={-0.05}
       outlineWidth={0}
@@ -661,6 +663,7 @@ function TypographyWithProgress({ frontText = 'KingCola ICG', backText = 'Join u
     <group ref={group}>
       <Text
         position={[0, frontYOffset, 12]}
+        font={STABLE_3D_FONT_URL}
         fontSize={fontSize}
         letterSpacing={-0.05}
         outlineWidth={0}
@@ -677,6 +680,7 @@ function TypographyWithProgress({ frontText = 'KingCola ICG', backText = 'Join u
       </Text>
       <Text
         position={[0, -height + backYOffset, 12]}
+        font={STABLE_3D_FONT_URL}
         fontSize={backFontSize}
         letterSpacing={-0.05}
         outlineWidth={0}
@@ -694,3 +698,10 @@ function TypographyWithProgress({ frontText = 'KingCola ICG', backText = 'Join u
     </group>
   );
 }
+
+useGLTF.preload(lensModelPath);
+useGLTF.preload(cubeModelPath);
+useGLTF.preload(barModelPath);
+useTexture.preload(demoCs1Path);
+useTexture.preload(demoCs2Path);
+useTexture.preload(demoCs3Path);

@@ -2,11 +2,11 @@
 id: wenshu-suixing
 name: 文枢随行
 icon: route
+cohort: 24级
 language: UniApp
 techStack: [UniApp, JavaScript, Vue, Java, Python]
 description: 面向自由行的智慧文旅 APP，覆盖行前规划、行中服务、行后记忆沉淀。
 keywords: [culture-travel, icg-app-team, city-guide-ai]
-html_url: https://github.com/openlake/wenshu-suixing
 stargazers_count: 666
 forks_count: 666
 watchers_count: 666
